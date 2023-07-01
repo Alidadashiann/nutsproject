@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container row d-flex flex-row-reverse">
+    <div class="col-lg-6 col-md-12 p-3">
+        <div class="lc-block ratio ratio-1x1">
+            <img style="object-fit: contain;" class="img-fluid"
+                src="{% static 'image/home.webp' %}"
+                alt="nuts">
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 p-3">
+        <div class="lc-block my-5">
+            <div editable="rich">
+                <h2 class="rfs-25">خرید آجیل، با کیفیتی مثال‌زدنی!</h2>
+            </div>
+        </div>
+        <div class="lc-block my-5">
+            <div editable="rich">
+                <p>
+                    خشکبار داداشیان فعالیت خود را از ۱۰ سال پیش ، در شهر تهران آغاز نمود و سهم به سزایی در عرضه
+                    خشکبار عهده‌دار باشد.
+                    تنوع اجناس خشکبار داداشیان با بیش از ۸۰ نوع محصول مختلف در بسته بندی های متنوع و زیبا حاکی از
+                    گستردگی فعالیت و سابقه درخشان آن می باشد.
+                    طیف وسیع مشتریان داخلی و خارجی ، مبین عملکرد مثبت و رو به رشد خشکبار داداشیان بوده و نشان رضایت
+                    در چهره مشتریان ، بیانگر مرغوبیت محصولات این مجموعه می باشد.
+
+                </p>
+            </div>
+            {% if user.is_authenticated %}
+                {% if request.user.user_type == "S" %}
+                    <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="{% url 'product:panel' %}" class="btn btn-primary">پنل عمده فروشان</a>
+                {% elif request.user.user_type == "B" %}
+                    <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="{% url 'product:list' %}" class="btn btn-primary">فروشگاه</a>
+                    <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="{% url 'shop:list' %}" class="btn btn-primary">سبد خرید</a>
+                {% endif %}
+            {% else %}
+                <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="{% url 'product:list' %}" class="btn btn-primary">فروشگاه</a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

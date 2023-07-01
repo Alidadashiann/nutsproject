@@ -1,0 +1,18 @@
+body {
+    background-color: #f9f9f9;
+    color: #212121;
+}
+
+#header, #footer {
+    background-color: #e0d09a;
+    color: #212121;
+}
+
+#header a {
+    color: #212121;
+}
+
+#logo {
+    width: 70px;
+}
+

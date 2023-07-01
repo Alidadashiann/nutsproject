@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <h1>سبد خرید شما</h1>
+    {% if error_products %}
+    <h3>ببخشدید تعداد کافی محصول وجود نداره</h3>
+    <ul>
+        {% for product in error_products %}
+        <li>{{ product.name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>محصول </th>
+                <th>تعداد</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>
+                    <a href="{% url 'shop:increase_quantity' pk=item.product.id %}" class="btn">+</a>
+                    {{ item.quantity }}
+                    <a  href="{% url 'shop:decrease_quantity' pk=item.product.id %}" class="btn">-</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="{% url 'shop:pay' %}"
+        class="btn btn-primary">پرداخت</a>
+</div>
+{% endblock content %}

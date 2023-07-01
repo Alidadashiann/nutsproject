@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container w-50">
+    <form  
+        method="POST" 
+        {% if '/accounts/register/' == request.path %}
+            action="{% url 'account:register' %}"
+        {% endif %}
+        {% if '/accounts/register/seller/' == request.path  %}
+            action="{% url 'account:register-seller' %}"
+        {% endif %}
+    >
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field_errors in form.errors.values %}
+                        {% for error in field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="form-group pb-3">
+            {{ form.first_name }}
+        </div>
+        <div class="form-group pb-3">
+            {{ form.last_name }}
+        </div>
+        <div class="form-group pb-3">
+            {{ form.username }}
+        </div>
+        <div class="form-group pb-3">
+            {{ form.email }}
+        </div>
+        <div class="form-group pb-3">
+            {{ form.city }}
+        </div>
+        <div class="form-group pb-3">
+            {{ form.password }}
+        </div>
+        <div class="form-group pb-3">
+            {{ form.user_type }}
+        </div>
+        <button type="submit" class="btn" style="background-color: #99b32d; color: #F9F9F9" >ثبت نام</button>
+
+        <a class="btn" href="{% url 'account:login' %}">ورود</a>
+        {% if '/accounts/register/' == request.path %}
+            <a class="btn" href="{% url 'account:register-seller' %}">
+            ثبت نام عمده فروشان
+            </a>
+        {% endif %}
+        {% if '/accounts/register/seller/' == request.path  %}
+            <a class="btn" href="{% url 'account:register' %}">
+            ثبت نام مشتریان
+            </a>
+        {% endif %}
+    </form>
+</div>
+{% endblock content %}

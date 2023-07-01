@@ -1,0 +1,14 @@
+enviroment file
+env/
+
+# python3 cache file
+*.pyc
+
+# vscode 
+.vscode/launch.json
+
+
+# media file
+backend/media/*
+.vscode/settings.json
+backend/db.sqlite3

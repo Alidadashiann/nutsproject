@@ -1,0 +1,30 @@
+#product {
+    gap: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#product-card img {
+    height: 220px;
+}
+
+#search form {
+    display: flex;
+    gap: 15px;
+    margin: 20px auto 80px;
+}
+
+#create-product {
+    margin: 20px auto 80px;
+    width: 50%;
+}
+
+#create-product form {
+    display: flex;
+    flex-direction: column;
+}
+
+#create-product button {
+    width: 200px;
+}

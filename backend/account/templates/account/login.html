@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container w-50">
+    <form method="POST">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <p style="color: red;">{{ form.non_field_errors.as_text }}</p>
+        {% endif %}
+        <div class="form-group pb-3" >
+            {{ form.username }}
+        </div>
+        <div class="form-group pb-3">
+            {{ form.password }}
+        </div>
+        <button type="submit" class="btn" style="background-color: #99b32d; color: #F9F9F9" >ورود</button>
+        <a class="btn" href="{% url 'account:register' %}">ثبت نام</a>
+        <a class="btn" href="{% url 'account:rest-password' %}">فراموشی رمز عبور</a>
+    </form>
+</div>
+{% endblock content %}

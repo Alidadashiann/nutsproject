@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load num2persion %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock head %}
+
+
+{% block content %}
+    <div id="create-product" >
+        <form class="form-inline" method="POST" action="{% url 'product:create' %}" enctype="multipart/form-data">
+            <legend style="color: #212121;">ثبت محصول جدید</legend>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <p style="color: red;">{{ form.non_field_errors.as_text }}</p>
+            {% endif %}
+            <div class="form-group pb-3" >
+                <label style="color: #212121;" class="form-label">نام محصول</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group pb-3">
+                {{ form.image }}
+            </div>
+            <div class="form-group pb-3">
+                <label  style="color: #212121;" class="form-label">قیمت محصولات به هزار تومان (۳۰۰ هزار تومان)</label>
+                {{ form.price }}
+            </div>
+            <div class="form-group pb-3">
+                <label style="color: #212121;" class="form-label">مقدار موجودی محصولات به کیلوگرم (۵۰ کیلوگرم)</label>
+                {{ form.quantity }}
+            </div>
+            <div class="form-group pb-3">
+                <label style="color: #212121;" class="form-label">کیفیت محصول (درجه یک)</label>
+                {{ form.type }}
+            </div>
+            <div class="form-group pb-3">
+                {{ form.product_owner }}
+            </div>
+            <div class="form-group pb-3">
+                {{ form.city }}
+            </div>
+            <button type="submit" class="btn" style="background-color: #99b32d; color: #F9F9F9" > ثبت محصول</button>
+        </form>
+    </div>
+
+
+    <table class="table p-5">
+        <thead>
+            <tr>
+                <th>محصول </th>
+                <th>خریدار</th>
+                <th>تعداد</th>
+                <th>وضعیت خرید</th>
+                <th>ارسال محصول</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in sells %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.user.username }}</td>
+                <td>{{ item.quantity }}</td>
+
+                <td>
+                    {% if 'P' in item.status %}
+                        پرداخت شده
+                    {% elif "S" in item.status %}
+                        ارسال شده
+                    {% else %}
+                        وضعیت نامشخص
+                    {% endif %}
+                </td>
+                <td>
+                    <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="{% url 'product:post' pk=item.id %}" class="btn btn-primary">ارسال محصول</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="product">
+        {% for item in object_list %}
+            <div id="product-card" class="card" style="max-width: 18rem;">
+                <img class="card-img-top" src="{{ item.image.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">
+                        قیمت یک کیلوگرم: {{ item.price | num2persian }} هزار تومان <br />
+                        کیفیت: درجه یک<br />
+                        موجودی: {{ item.quantity | num2persian }} کیلوگرم<br />
+                        شعبه: {{ item.city.name }}<br />
+
+                        دسته بندی : {{ item.type }} <br />
+                    </p>
+                    <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="#" class="btn btn-primary">افزودن به سبد خرید</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

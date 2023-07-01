@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load num2persion %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock head %}
+
+
+{% block content %}
+    <nav id="search" class="navbar ">
+        <form class="form-inline" method="GET" action="{% url 'product:search' %}">
+            <input class="form-control mr-sm-2" type="search" name="search" placeholder="اسم محصول" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">بگرد</button>
+        </form>
+    </nav>    
+
+    <div id="product">        
+        {% for item in object_list %}
+            <div id="product-card" class="card" style="max-width: 18rem;">
+                <img class="card-img-top" src="{{ item.image.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">
+                        قیمت یک کیلوگرم: {{ item.price | num2persian }} هزار تومان <br />
+                        کیفیت: درجه یک<br />
+                        موجودی: {{ item.quantity | num2persian }} کیلوگرم<br />
+                        شعبه: {{ item.city.name }}<br />
+
+                        دسته بندی : {{ item.type }} <br />
+                    </p>
+                    <a style="color: #F9F9F9; background-color: #99b32d; border: #99b32d;" href="{% url 'shop:add-to-cart' item.id %}" class="btn btn-primary">افزودن به سبد خرید</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

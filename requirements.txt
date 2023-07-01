@@ -1,0 +1,4 @@
+Django==4.2.2
+pillow==9.5.0
+python_dotenv==1.0.0
+persian_tools==0.0.11
